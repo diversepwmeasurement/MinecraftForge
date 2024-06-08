@@ -1,13 +1,14 @@
-name: 'PR Review'
-
-on: pull_request_review
-
 jobs:
   upload_payload:
     name: Upload payload
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - uses: actions/upload-artifact@v3 # Payload artifact is consumed in Actionable
-        with:
-          name: payload
-          path: ${{ github.event_path }}
+    - continue-on-error: true
+      uses: actions/upload-artifact@v3
+      with:
+        name: payload
+        path: ${{ github.event_path }}
+name: PR Review
+on:
+  repository_dispatch:
+    types: trigger-ga___pull_request_review.yml
